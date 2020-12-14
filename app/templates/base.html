@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+
+{% block title %}
+    <title>实惠喵测试平台</title>
+{% endblock %}
+
+{% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon"
+          href="{{ url_for('static', filename='images/favicon.ico') }}">
+
+    <title>实惠喵</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ie10-viewport-bug-workaround.css') }}">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+{% endblock %}
+
+<body>
+{% block navbar %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">实惠喵测试平台</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">我的</a></li>
+                    <li><a href="#">设置</a></li>
+                    <li><a href="#">简介</a></li>
+                    <li><a href="#">帮助</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    {#    <div class="nav-self">#}
+    {#        <div style="padding-top: inherit" class="container">#}
+    {#            <form class="form-inline" action="{{ url_for('web.search') }}" method="get">#}
+    {#                <div class="flex-vertical-center-height">#}
+    {#                    <div class="col-md-2">#}
+    {#                        <img src="{{url_for('static', filename='images/logo-yushu.png')}}"/>#}
+    {#                    </div>#}
+    {#                    <div style="margin-left:30px;" class="col-md-8 input-group">#}
+    {#                        <input name="q" type="text" placeholder="ISBN、图书名称"#}
+    {#                               class="form-control input-sm">#}
+    {#                        <span class="input-group-btn">#}
+    {#                            <input class="btn btn-search" type="submit" value="搜索"/>#}
+    {#                        </span>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </form>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <div class="sub-nav flex-vertical-center">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-md-2 col-md-offset-1">#}
+    {#                    <a id="recent" href="{{ url_for('web.index') }}"#}
+    {#                       class="flex-vertical-hor-center">#}
+    {#                        <img src="{{ url_for('static', filename='images/upload.png') }}"/>#}
+    {#                        <span>最近上传</span>#}
+    {#                    </a>#}
+    {#                </div>#}
+    {#                <div class="col-md-2">#}
+    {#                    <a id="gifts" href="{{ url_for('web.my_gifts') }}"#}
+    {#                       class="flex-vertical-hor-center">#}
+    {#                        <img src="{{ url_for('static', filename='images/gift.png') }}"/>#}
+    {#                        <span>赠送清单</span>#}
+    {#                    </a>#}
+    {#                </div>#}
+    {#                <div class="col-md-2">#}
+    {#                    <a id="wishes" href="{{ url_for('web.my_wish') }}"#}
+    {#                       class="flex-vertical-hor-center">#}
+    {#                        <img src="{{ url_for('static', filename='images/wish.png') }}"/>#}
+    {#                        <span>心愿清单</span>#}
+    {#                    </a>#}
+    {#                </div>#}
+    {#                <div class="col-md-2">#}
+    {#                    <a id="pending" href="{{ url_for('web.pending') }}"#}
+    {#                       class="flex-vertical-hor-center">#}
+    {#                        <img src="{{ url_for('static', filename='images/fish.png') }}"/>#}
+    {#                        <span>鱼漂</span>#}
+    {#                    </a>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <div class="container-height flex-vertical-center float-menu">#}
+    {#        {% if not current_user.is_authenticated %}#}
+    {#            <div style="float:right">#}
+    {#                <a href="{{ url_for('web.login') }}">登录</a>#}
+    {#                <a style="margin-left: 40px;" href="{{ url_for('web.register') }}">注册</a>#}
+    {#            </div>#}
+    {#        {% else %}#}
+    {#            <a href="{{ url_for('web.personal_center') }}">{{ current_user.nickname }}的鱼书</a>#}
+    {#            <a style="margin-left: 40px;" href="{{ url_for('web.logout') }}">注销</a>#}
+    {#        {% endif %}#}
+    {#    </div>#}
+{% endblock %}
+
+
+<div class='container-fluid'>
+    {#    <div class="row">#}
+    {#        {% with messages = get_flashed_messages() %}#}
+    {#            {% for message in messages %}#}
+    {#                {% if message %}#}
+    {#                    <div class="alert alert-warning" role="alert">{{ message }}</div>#}
+    {#                {% endif %}#}
+    {#            {% endfor %}#}
+    {#        {% endwith %}#}
+    {#        {% if form and form.errors %}#}
+    {#            {% for key, error in form.errors.items() %}#}
+    {#                <div class="alert alert-warning" role="alert">{{ error }}</div>#}
+    {#            {% endfor %}#}
+    {#        {% endif %}#}
+    {#    </div>#}
+    {% block content %} {% endblock %}
+</div>
+
+
+<div id="footer" class="flex-hor-center">
+    <span>© 2020-forever think created by 实惠喵</span>
+</div>
+
+</body>
+
+{% block scripts %}
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="{{ url_for('static', filename='js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
+    <script src="{{ url_for('static', filename='js/ie-emulation-modes-warning.js') }}"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {#    <script>#}
+    {#        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};#}
+    {#    </script>#}
+
+{% endblock %}
+
+</html>
