@@ -1,0 +1,1 @@
+ uwsgi --daemonize ~/lixiaolong/think/uwsgi.log --http :9090  --wsgi-file fisher.py --callable app --processes 4 --threads 2
