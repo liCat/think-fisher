@@ -4,9 +4,13 @@
 # @Author  : BruceLee
 # @Site    : 用户系统相关的接口数据源
 # @File    : user_source.py
+import copy
+import time
+
 import requests
 
 from ..libs import helper
+from ..models.user_struct import UserStruct
 
 
 class User:
@@ -47,7 +51,7 @@ class User:
             'Authorization': "Bearer {0}".format(cms_token)
         }
         resp = requests.get(url, request_body, headers=headers, verify=False)
-        return resp
+        return helper.str_to_json(resp.text)
 
     @classmethod
     def get_much_user_infos(cls, strat_phone, end_phone):
@@ -59,16 +63,35 @@ class User:
         """
         user_list = []
         for number in range(strat_phone, end_phone + 1):
-            add_single_user = User.add_fake_user(number)
+            try:
+                User.add_fake_user(number)
+            except Exception as e:
+                print('add fake user fail')
             get_single_user_info = User.get_user_info(number)
-            res_singel_user = helper.str_to_json(add_single_user.text)
-            res_single_uesr_info = helper.str_to_json(get_single_user_info.text)
-            if res_singel_user['code'] == 0:
-                user_list.append(res_single_uesr_info['data']['id'])
-                user_list.append(res_single_uesr_info['data']['phone'])
-            if len(res_single_uesr_info['data']['taobao']) > 0:
-                user_list.append(res_single_uesr_info['data']['taobao'][0])
+            user_fillter = User.__fill_user(get_single_user_info)
+            user_list.append(user_fillter)
         return user_list
+
+    @classmethod
+    def __fill_user(cls, user_infos):
+        """
+        裁剪信息
+        :param user_infos:
+        :return:
+        """
+        user_res_copy = copy.deepcopy(UserStruct.userRes)
+        user_res_copy['userID'] = user_infos['data']['id']
+        user_res_copy['phoneNumer'] = user_infos['data']['phone']
+        if len(user_infos['data']['taobao']) > 0:
+            user_res_copy['taobao'] = user_infos['data']['taobao'][0]
+        if user_infos['data']['expiredTime'] > int(time.time()):
+            if user_infos['data']['isHasAnnualCardPermission']:
+                user_res_copy['isMember'] = True
+            else:
+                user_res_copy['isMember'] = True
+        else:
+            user_res_copy['isMember'] = False
+        return user_res_copy
 
     @classmethod
     def bind_family_relation(cls, invit_id, family_user_id):
@@ -137,4 +160,4 @@ class User:
             'Content-Type': 'application/json; charset=utf-8'
         }
         resp = requests.post(url, helper.dict_to_str(request_body), headers=headers, verify=False)
-        return resp
+        return helper.str_to_json(resp.text)
