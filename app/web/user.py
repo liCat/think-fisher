@@ -53,3 +53,30 @@ def open_user_member():
     else:
         return {"msg": "mock pay member fail"}
 
+
+@web.route("/user/freeMember")
+def claim__user_free_card():
+    """
+    开通免费3天会员
+    """
+    user_id = int(request.args['userId'])
+    if user_id != 0 and user_id != '':
+        trace = User.claim_free_card(user_id)
+        return jsonify(trace)
+    else:
+        return {"msg": "claim free thrree member fail"}
+
+
+@web.route("/user/familyMember")
+def bind_user_family_relation():
+    """
+    绑定亲友关系, 新用户需要登录才算做绑定亲友号成功
+    :return:
+    """
+    invit_id = int(request.args['invitedId'])
+    family_user_id = int(request.args['familyId'])
+    if invit_id != 0 and invit_id != '' and family_user_id != 0 and family_user_id != '':
+        trace = User.bind_family_relation(invit_id, family_user_id)
+        return jsonify(trace)
+    else:
+        return {"msg": "bind user family relation"}

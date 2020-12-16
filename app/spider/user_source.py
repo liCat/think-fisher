@@ -112,7 +112,7 @@ class User:
             'Content-Type': 'application/json; charset=utf-8'
         }
         resp = requests.post(url, helper.dict_to_str(request_body), headers=headers, verify=False)
-        return resp
+        return helper.str_to_json(resp.text)
 
     @classmethod
     def claim_free_card(cls, user_id):
@@ -130,7 +130,7 @@ class User:
             'Content-Type': 'application/json; charset=utf-8'
         }
         resp = requests.post(url, helper.dict_to_str(request_body), headers=headers, verify=False)
-        return resp
+        return helper.str_to_json(resp.text)
 
     @classmethod
     def mock_open_membership(cls, user_id, package_id, order_id=None):
