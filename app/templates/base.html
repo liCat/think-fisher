@@ -141,6 +141,21 @@
     {% block content %} {% endblock %}
 </div>
 
+<div class="container">
+    <a href="/add?{{ condition }}"><button class="btn btn-primary">添加</button></a>
+    <div class="row " style="margin-top: 10px">
+            <ul>
+                {% for foo in index_list %}
+                    <li>{{ foo }}</li>
+                {% endfor %}
+            </ul>
+            <nav aria-label="Page navigation" class="pull-right">
+                <ul class="pagination">
+                    {{ html|safe }}
+                </ul>
+            </nav>
+    </div>
+</div>
 
 <div id="footer" class="flex-hor-center">
     <span>© 2020-forever think created by 实惠喵</span>
